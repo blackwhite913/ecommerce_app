@@ -2,6 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:plantshop/screens/home_screen.dart';
 import 'package:plantshop/screens/plantCart.dart';
+import 'package:plantshop/screens/profile_manager.dart';
 import 'package:plantshop/screens/whislist_screen.dart';
 
 class PlantNavigationBar extends StatefulWidget {
@@ -44,7 +45,7 @@ class _PlantNavigationBarState extends State<PlantNavigationBar> {
               Navigator.of(context).pushNamed(CartPage.routeName);
               break;
             case 4:
-              print(index);
+              Navigator.of(context).pushNamed(ProfileManager.routeName);
               break;
           }
         }

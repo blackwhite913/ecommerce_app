@@ -76,4 +76,9 @@ class PlantsInCart with ChangeNotifier{
     notifyListeners();
   }
 
+  void clearAll(){
+    _items={};
+    notifyListeners();
+  }
+
 }

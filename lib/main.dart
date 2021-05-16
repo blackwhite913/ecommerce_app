@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:plantshop/plant_shop/modules/plant.dart';
+import 'package:plantshop/plant_shop/providers/drawer_provider.dart';
+import 'package:plantshop/plant_shop/providers/orders_provider.dart';
 import 'package:plantshop/plant_shop/providers/plantInCart_provider.dart';
 import 'package:plantshop/plant_shop/providers/plants_provider.dart';
 import 'package:plantshop/screens/plantCart.dart';
 import 'package:plantshop/screens/plant_detail.dart';
+import 'package:plantshop/screens/profile_manager.dart';
 import 'package:plantshop/screens/review.dart';
 import 'package:plantshop/screens/whislist_screen.dart';
 import 'package:provider/provider.dart';
@@ -30,14 +33,19 @@ class MyApp extends StatelessWidget
          ChangeNotifierProvider(
              create: (ctx)=>PlantsInCart()
          ),
+         ChangeNotifierProvider(
+             create: (ctx)=>PlantOrders()
+         ),
+         ChangeNotifierProvider(
+             create: (ctx)=>DrawerProvide()
+         ),
        ],
       child: MaterialApp(
         home:HomePage(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Color(0xff62c050),///green we want///
-          //accentColor:Color(0xffe4e9f4),/////tile backdrop color//
-          accentColor: Colors.blue,
+          accentColor:Color(0xffe4e9f4),///tile backdrop color//
         ),
         routes: {
           PlantDetail.routeName:(ctx)=>PlantDetail(),
@@ -45,6 +53,7 @@ class MyApp extends StatelessWidget
           WishListScreen.routeName:(ctx)=> WishListScreen(),
           ReviewBottomSheet.routeName:(ctx)=>ReviewBottomSheet(),
           CartPage.routeName:(ctx)=>CartPage(),
+          ProfileManager.routeName:(ctx)=>ProfileManager(),
         },
       ),
     );

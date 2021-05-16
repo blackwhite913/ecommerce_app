@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:plantshop/plant_shop/modules/orders.dart';
+import 'package:plantshop/plant_shop/providers/orders_provider.dart';
 import 'package:plantshop/plant_shop/providers/plantInCart_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -76,14 +78,21 @@ class _ReviewBottomSheetState extends State<ReviewBottomSheet> {
                         border: Border.all(color: Theme.of(context).primaryColor)
                       ),
                     ),
-                    Container(
-                      width:150,
-                      padding: const EdgeInsets.all(10),
-                      child: Center(child: Text("Checkout",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(32),
-                          border: Border.all(color: Theme.of(context).primaryColor)
+                    InkWell(
+                      onTap: (){
+                        Provider.of<PlantOrders>(context,listen: false).addTransaction(totalObj.items.values.toList(),totalObj.totalAmount+10);
+                        totalObj.clearAll();
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        width:150,
+                        padding: const EdgeInsets.all(10),
+                        child: Center(child: Text("Checkout",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(32),
+                            border: Border.all(color: Theme.of(context).primaryColor)
+                        ),
                       ),
                     ),
                   ],
