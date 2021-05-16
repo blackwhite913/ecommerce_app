@@ -36,7 +36,8 @@ class MyApp extends StatelessWidget
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Color(0xff62c050),///green we want///
-          accentColor:Color(0xffe4e9f4),///tile backdrop color//
+          //accentColor:Color(0xffe4e9f4),/////tile backdrop color//
+          accentColor: Colors.blue,
         ),
         routes: {
           PlantDetail.routeName:(ctx)=>PlantDetail(),
