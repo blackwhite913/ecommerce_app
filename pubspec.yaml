@@ -32,9 +32,9 @@ dependencies:
   google_fonts:
   provider: 4.3.3
   curved_navigation_bar: ^0.3.7
-  velocity_x: ^1.4.1
 #  razorpay_flutter: 1.2.1
   toast: ^0.1.5
+  intl: ^0.17.0
   font_awesome_flutter: ^9.0.0
   bottom_sheet: ^0.0.1-dev.8
   flutter_cube: ^0.0.6
