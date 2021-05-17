@@ -10,7 +10,7 @@ class PlantOrders with ChangeNotifier{
   int _orderNumber=0;
 
   void addTransaction(List<PlantInCart> cartItems,double amount){
-    transactions.insert(0,Orders(
+    transactions.add(Orders(
       id: DateTime.now().toString(),
       date: DateTime.now(),
       orders: cartItems,

@@ -3,11 +3,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:plantshop/plant_shop/modules/plantinCart.dart';
+import 'package:plantshop/plant_shop/providers/drawer_provider.dart';
 import 'package:plantshop/plant_shop/providers/orders_provider.dart';
+import 'package:plantshop/widgets/profile_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class OrdersScreen extends StatefulWidget {
+  static const routeName = '/-orders';
   @override
   _OrdersScreenState createState() => _OrdersScreenState();
 }
@@ -16,28 +19,38 @@ class _OrdersScreenState extends State<OrdersScreen> {
   @override
   Widget build(BuildContext context) {
     final orderObj=Provider.of<PlantOrders>(context);
-    return Container(
-      color: Color(0xfff4f7fe),
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: orderObj.transactions.length,
-                itemBuilder: (context,index){
-                  var order=orderObj.transactions[index];
-              return OrderCard(
-                cartItems: order.orders,
-                total: order.totalPrice,
-                imageUrl: order.orders[0].imageUrl,
-                quantity: order.orders.length,
-                date: order.date,
-                orderNumber: index+1,
-              );
-            }),
-          ),
-        ],
+    final profileProvider=Provider.of<DrawerProvide>(context);
+    return Scaffold(
+      backgroundColor: Color(0xfff4f7fe),
+      appBar: AppBar(
+        title: profileProvider.titleSetter(),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
+      body: Container(
+        color: Color(0xfff4f7fe),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: orderObj.transactions.length,
+                  itemBuilder: (context, index) {
+                    var order = orderObj.transactions[index];
+                    return OrderCard(
+                      cartItems: order.orders,
+                      total: order.totalPrice,
+                      imageUrl: order.orders[0].imageUrl,
+                      quantity: order.orders.length,
+                      date: order.date,
+                      orderNumber: index + 1,
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+      drawer: ProfileDrawer(),
     );
   }
 }
@@ -106,7 +119,7 @@ class _OrderCardState extends State<OrderCard> {
                           fontSize: 12,
                           fontWeight: FontWeight.bold)),),
                       SizedBox(height: 5,),
-                      Text("Qty: ${widget.quantity}",style: GoogleFonts.varelaRound(textStyle: TextStyle(color: Color(0xFF384a65).withOpacity(0.7),
+                      Text("Items: ${widget.quantity}",style: GoogleFonts.varelaRound(textStyle: TextStyle(color: Color(0xFF384a65).withOpacity(0.7),
                         fontSize: 12,)),),
                     ],
                   )

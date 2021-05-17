@@ -15,7 +15,7 @@ class DrawerProvide with ChangeNotifier{
   Text titleSetter(){
     if(drawerMenu==DrawerMenu.userProducts){
       return Text("Manage Your Products",style:GoogleFonts.varelaRound(textStyle: TextStyle(color: Color(0xFF384a65),
-          fontSize: 22,
+          fontSize: 20,
           fontWeight: FontWeight.bold)),);
     }else if(drawerMenu==DrawerMenu.orders){
       return Text("Orders",style:GoogleFonts.varelaRound(textStyle: TextStyle(color: Color(0xFF384a65),

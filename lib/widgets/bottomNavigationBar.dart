@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:plantshop/screens/home_screen.dart';
 import 'package:plantshop/screens/plantCart.dart';
-import 'package:plantshop/screens/profile_manager.dart';
+import 'file:///C:/Users/feroz/Desktop/android_studio/plant_shop/lib/screens/profile_screens/profile_manager.dart';
 import 'package:plantshop/screens/whislist_screen.dart';
 
 class PlantNavigationBar extends StatefulWidget {

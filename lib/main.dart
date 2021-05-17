@@ -6,7 +6,9 @@ import 'package:plantshop/plant_shop/providers/plantInCart_provider.dart';
 import 'package:plantshop/plant_shop/providers/plants_provider.dart';
 import 'package:plantshop/screens/plantCart.dart';
 import 'package:plantshop/screens/plant_detail.dart';
-import 'package:plantshop/screens/profile_manager.dart';
+import 'package:plantshop/screens/profile_screens/orders_screen.dart';
+import 'package:plantshop/screens/profile_screens/user_products_screen.dart';
+import 'file:///C:/Users/feroz/Desktop/android_studio/plant_shop/lib/screens/profile_screens/profile_manager.dart';
 import 'package:plantshop/screens/review.dart';
 import 'package:plantshop/screens/whislist_screen.dart';
 import 'package:provider/provider.dart';
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget
           ReviewBottomSheet.routeName:(ctx)=>ReviewBottomSheet(),
           CartPage.routeName:(ctx)=>CartPage(),
           ProfileManager.routeName:(ctx)=>ProfileManager(),
+          UserProductScreen.routeName:(ctx)=>UserProductScreen(),
+          OrdersScreen.routeName:(ctx)=>OrdersScreen(),
         },
       ),
     );
