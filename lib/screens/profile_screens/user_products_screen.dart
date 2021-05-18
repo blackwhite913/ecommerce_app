@@ -38,7 +38,14 @@ class _UserProductScreenState extends State<UserProductScreen> {
           child: Builder(
             builder:(context)=> FloatingActionButton(
               onPressed: (){
-              showModalBottomSheet(context: context, builder:(bContext){
+              showBottomSheet(
+                elevation: 5,
+                backgroundColor: Colors.white,
+                ///rounding must be specified over here
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(64))
+                  ),
+                  context: context, builder:(bContext){
                 return ProductBottomSheet();
               });
               },

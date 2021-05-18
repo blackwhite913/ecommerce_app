@@ -1,41 +1,122 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:plantshop/plant_shop/modules/plant.dart';
+import 'package:plantshop/plant_shop/providers/plants_provider.dart';
+import 'package:provider/provider.dart';
 
 
-class ProductBottomSheet extends StatelessWidget {
+class ProductBottomSheet extends StatefulWidget {
+  @override
+  _ProductBottomSheetState createState() => _ProductBottomSheetState();
+}
+
+class _ProductBottomSheetState extends State<ProductBottomSheet> {
+  final _form=GlobalKey<FormState>();
+  final _priceFocusNode =FocusNode();
+  final _descriptionFocusNode =FocusNode();
+  final _imageUrlController=TextEditingController();
+  final _imageFocusNode=FocusNode();
+  var _initValues={
+    'title':'',
+    'description':'',
+    'price':'',
+    'imageUrl':'',
+  };
+  var _addMainPlant=Plant(id: null,name: '',price: 0,description: '',imageUrl: '');
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _imageFocusNode.addListener(_updateImageUrl);
+  }
+
+  void _saveForm(){
+    final value= _form.currentState.validate();
+    if(!value){
+      return;
+    }
+    _form.currentState.save();
+    if(_addMainPlant.id!=null){
+     print("hain");
+    }else{
+      Provider.of<Plants>(context,listen: false).addPlant(_addMainPlant);
+    }
+    Navigator.of(context).pop();
+  }
+
+  void _updateImageUrl(){
+    if(!_imageFocusNode.hasFocus){
+      setState(() {
+
+      });
+    }
+  }
+
+
+  @override
+  void dispose() {
+    _imageFocusNode.removeListener(_updateImageUrl);
+    _priceFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    _imageUrlController.dispose();
+    _imageFocusNode.dispose();
+    super.dispose();
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
+      ),
+      height: 600,
+      padding: const EdgeInsets.only(top: 60,left: 20,right: 20),
       child:  Form(
-//        key: _form,
+        key: _form,
         child: ListView(
           children: [
-            ///title input
+            Text("Add Product",style: GoogleFonts.varelaRound(textStyle: TextStyle(
+              color:Color(0xFF384a65),
+              fontSize: 24,
+              fontWeight: FontWeight.bold
+            )),),
+            SizedBox(height: 20,),
             TextFormField(
-//              initialValue: _initValues['title'],
+              initialValue: _initValues['title'],
               decoration: InputDecoration(
-                  labelText: "Title",
-                  border: OutlineInputBorder()
+                  labelText: "Name",
+                  hoverColor: Color(0xFF384a65),
+                  labelStyle: GoogleFonts.vesperLibre(textStyle: TextStyle(
+                      color:Color(0xFF384a65).withOpacity(0.5),
+                      fontSize: 18,
+                  )),
+                  contentPadding: const EdgeInsets.all(3),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF384a65)),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF384a65)),
+                  ),
               ),
-//              onFieldSubmitted: (_){
-//                FocusScope.of(context).requestFocus(_priceFocusNode);
-//              },
+              onFieldSubmitted: (_){
+                FocusScope.of(context).requestFocus(_priceFocusNode);
+              },
               textInputAction: TextInputAction.next,
-              ///the text Input action allows you to change the onSubmit button your
-              ///virtual phone keyboard allowing a better UX with the form filling///
-//              onSaved: (value){
-//                _editProduct= Product(
-//                  title: value,
-//                  price: _editProduct.price,
-//                  description:_editProduct.description,
-//                  imageUrl: _editProduct.imageUrl,
-//                  id: _editProduct.id,
-//                  isFavorite: _editProduct.isFavorite,
-//                );
-//              },
+              onSaved: (value){
+                _addMainPlant= Plant(
+                  name: value,
+                  price: _addMainPlant.price,
+                  description:_addMainPlant.description,
+                  imageUrl: _addMainPlant.imageUrl,
+                  id: _addMainPlant.id,
+                  isFavorite: _addMainPlant.isFavorite,
+                );
+              },
               validator: (value){
-                ///return null meaning the value is correct///
-                ///if you return a text it is considered to be an error text///
                 if(value.isEmpty){
                   return 'Please provide a value';
                 }
@@ -43,35 +124,44 @@ class ProductBottomSheet extends StatelessWidget {
               },
             ),
             SizedBox(height: 20,),
-            ///price input
             TextFormField(
-//              initialValue: _initValues['price'],
-//              focusNode: _priceFocusNode,
+              initialValue: _initValues['price'],
+              focusNode: _priceFocusNode,
               decoration: InputDecoration(
-                  labelText: "Price",
-                  border: OutlineInputBorder()
+                labelText: "Price",
+                hoverColor: Color(0xFF384a65),
+                labelStyle: GoogleFonts.vesperLibre(textStyle: TextStyle(
+                  color:Color(0xFF384a65).withOpacity(0.5),
+                  fontSize: 18,
+                )),
+                contentPadding: const EdgeInsets.all(3),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF384a65)),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF384a65)),
+                ),
               ),
-//              onFieldSubmitted: (_){
-//                FocusScope.of(context).requestFocus(_descriptionFocusNode);
-//              },
+              onFieldSubmitted: (_){
+                FocusScope.of(context).requestFocus(_descriptionFocusNode);
+              },
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
-//              onSaved: (value){
-//                _editProduct= Product(
-//                  title: _editProduct.title,
-//                  price: double.parse(value),
-//                  description:_editProduct.description,
-//                  imageUrl: _editProduct.imageUrl,
-//                  id: _editProduct.id,
-//                  isFavorite: _editProduct.isFavorite,
-//                );
-//              },
+              onSaved: (value){
+                _addMainPlant= Plant(
+                  name: _addMainPlant.name,
+                  price: double.parse(value),
+                  description:_addMainPlant.description,
+                  imageUrl: _addMainPlant.imageUrl,
+                  id: _addMainPlant.id,
+                  isFavorite: _addMainPlant.isFavorite,
+                );
+              },
               validator: (value){
                 if(value.isEmpty){
                   return "Please Enter a Price";
                 }
                 if(double.tryParse(value)==null){
-                  ///tryparse is similar to parse but ,if there were no numbers parsed it will return null
                   return "Please Enter a valid Price";
                 }
                 if(double.parse(value)<=0){
@@ -81,42 +171,50 @@ class ProductBottomSheet extends StatelessWidget {
               },
             ),
             SizedBox(height: 20,),
-            ///description input
             TextFormField(
-//              initialValue: _initValues['description'],
-//              focusNode: _descriptionFocusNode,
+              initialValue: _initValues['description'],
+              focusNode: _descriptionFocusNode,
               decoration: InputDecoration(
-                  labelText: "Description",
-                  border: OutlineInputBorder()
+                labelText: "Description",
+                hoverColor: Color(0xFF384a65),
+                labelStyle: GoogleFonts.vesperLibre(textStyle: TextStyle(
+                  color:Color(0xFF384a65).withOpacity(0.5),
+                  fontSize: 18,
+                )),
+                contentPadding: const EdgeInsets.all(3),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF384a65)),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF384a65)),
+                ),
               ),
               maxLines: 3,
-              ///description is a multiline input as generally descriptions
-              ///are bigger ,the max lines allows you to provide breaking lines
-              ///to your textField for a better display of user Input
-              ///the recommended input keyboard for such textFields is
-              ///multiline
               keyboardType: TextInputType.multiline,
-//              onSaved: (value){
-//                _editProduct= Product(
-//                  title: _editProduct.title,
-//                  price: _editProduct.price,
-//                  description:value,
-//                  imageUrl: _editProduct.imageUrl,
-//                  id: _editProduct.id,
-//                  isFavorite: _editProduct.isFavorite,
-//                );
-//              },
+              onSaved: (value){
+                _addMainPlant= Plant(
+                  name: _addMainPlant.name,
+                  price: _addMainPlant.price,
+                  description:value,
+                  imageUrl: _addMainPlant.imageUrl,
+                  id: _addMainPlant.id,
+                  isFavorite: _addMainPlant.isFavorite,
+                );
+              },
               validator: (value){
-                ///return null meaning the value is correct///
-                ///if you return a text it is considered to be an error text///
                 if(value.isEmpty){
                   return 'Please provide a value';
+                }
+                if(value.length>=300){
+                  return "The description is too large";
+                }
+                if(value.length<=10){
+                  return "The description is too small";
                 }
                 return null;
               },
             ),
             SizedBox(height: 20,),
-            ///Image input
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -125,35 +223,55 @@ class ProductBottomSheet extends StatelessWidget {
                   height: 100,
                   margin: const EdgeInsets.only(top: 8,right: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey,width: 1),
+                    color: Theme.of(context).accentColor,
+                     borderRadius: BorderRadius.all(Radius.circular(8)),
+                     boxShadow: [
+                       BoxShadow(
+                         offset: Offset(-1,3),
+                         color: Colors.grey.withOpacity(0.5)
+                       )
+                     ]
                   ),
-//                  child: _imageUrlController.text.isEmpty?Text("Enter the Url!!"):FittedBox(
-//                    child: Image.network(_imageUrlController.text,fit: BoxFit.cover,),
-//                  ),
+                  child: _imageUrlController.text.isEmpty?
+                    Center(
+                      child: Text("Enter the url",style: GoogleFonts.varelaRound(
+                        textStyle: TextStyle(color:Color(0xFF384a65),fontSize: 13,fontWeight: FontWeight.bold),)),
+                    )
+                      :FittedBox(
+                    child: Image.network(_imageUrlController.text,fit: BoxFit.cover,),
+                  ),
                 ),
                 Expanded(
                   child:TextFormField(
-//                    focusNode: _imageFocusNode,
-//                    controller: _imageUrlController,///you cant set initial values to textField with a controller
+                    focusNode: _imageFocusNode,
+                    controller: _imageUrlController,
                     decoration: InputDecoration(
-                        labelText: "Image Url",
-                        border: OutlineInputBorder()
+                      labelText: "Image Link",
+                      hoverColor: Color(0xFF384a65),
+                      labelStyle: GoogleFonts.vesperLibre(textStyle: TextStyle(
+                        color:Color(0xFF384a65).withOpacity(0.5),
+                        fontSize: 18,
+                      )),
+                      contentPadding: const EdgeInsets.all(3),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF384a65)),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF384a65)),
+                      ),
                     ),
                     keyboardType: TextInputType.url,
                     textInputAction: TextInputAction.done,
-//                    onFieldSubmitted: (_){
-//                      _saveForm();
-//                    },
-//                    onSaved: (value){
-//                      _editProduct= Product(
-//                        title: _editProduct.title,
-//                        price: _editProduct.price,
-//                        description:_editProduct.description,
-//                        imageUrl: value,
-//                        id: _editProduct.id,
-//                        isFavorite: _editProduct.isFavorite,
-//                      );
-//                    },
+                    onSaved: (value){
+                      _addMainPlant= Plant(
+                        name: _addMainPlant.name,
+                        price: _addMainPlant.price,
+                        description:_addMainPlant.description,
+                        imageUrl: value,
+                        id: _addMainPlant.id,
+                        isFavorite: _addMainPlant.isFavorite,
+                      );
+                    },
                     validator: (value){
                       if(value.isEmpty){
                         return "Please Enter an image Url";
@@ -169,9 +287,29 @@ class ProductBottomSheet extends StatelessWidget {
 //                         });
 //                       },
                   ),
-                )
+                ),
+
               ],
             ),
+            SizedBox(height: 50,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FlatButton(
+                  height: 50,
+                    onPressed: (){
+                      _saveForm();
+                    },
+                    color: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:60.0),
+                      child: Text("Submit",style: TextStyle(color: Colors.white),),
+                    )),
+              ],
+            )
           ],
         ),
       ),

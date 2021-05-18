@@ -21,8 +21,15 @@ class Plants with ChangeNotifier{    ///this is a provider class used to store a
   ///in the other widget and  by traversing through the whole list with the particular id it finds the element
   ///and gets it,thus we have all the properties of the object with just its id///
 
-  void addPlant(){
-//    _items.add();
+  void addPlant(Plant plant){
+    final newPlant=Plant(
+      id: DateTime.now().toString(),
+      imageUrl: plant.imageUrl,
+      name: plant.name,
+      description: plant.description,
+      price: plant.price,
+    );
+    _items.add(newPlant);
     notifyListeners();
   }///a simple code to add more plant object to our existing list///
 }
