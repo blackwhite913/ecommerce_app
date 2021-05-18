@@ -7,8 +7,14 @@ import 'package:plantshop/widgets/profile_drawer.dart';
 import 'package:provider/provider.dart';
 
 
-class UserProductScreen extends StatelessWidget {
+class UserProductScreen extends StatefulWidget {
   static const routeName = '/-UserProducts';
+
+  @override
+  _UserProductScreenState createState() => _UserProductScreenState();
+}
+
+class _UserProductScreenState extends State<UserProductScreen> {
   @override
   Widget build(BuildContext context) {
     final profileProvider=Provider.of<DrawerProvide>(context);
@@ -27,17 +33,19 @@ class UserProductScreen extends StatelessWidget {
           ),
         ),
         drawer: ProfileDrawer(),
-        floatingActionButton:Padding(
+            floatingActionButton:Padding(
           padding: const EdgeInsets.only(bottom:20.0),
-          child: FloatingActionButton(
-            onPressed: (){
-             showModalBottomSheet(context: context, builder:(bContext){
-               return ProductBottomSheet();
-             });
-            },
-            child: Icon(Icons.add,color: Colors.white,size: 30,),
-            backgroundColor: Theme.of(context).primaryColor,
-            ),
+          child: Builder(
+            builder:(context)=> FloatingActionButton(
+              onPressed: (){
+              showModalBottomSheet(context: context, builder:(bContext){
+                return ProductBottomSheet();
+              });
+              },
+              child: Icon(Icons.add,color: Colors.white,size: 30,),
+              backgroundColor: Theme.of(context).primaryColor,
+              ),
+          ),
         ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
